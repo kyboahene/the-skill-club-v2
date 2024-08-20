@@ -1,0 +1,338 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+// user
+model User {
+  id               String    @id @default(uuid())
+  name             String
+  email            String
+  role             Role      @default(USER)
+  company          Company?
+  talent           Talent?
+  messagesSent     Message[] @relation("MessagesSent")
+  messagesReceived Message[] @relation("MessagesReceived")
+  new              Boolean   @default(true)
+  message          Message[]
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
+}
+
+enum Role {
+  USER
+  ADMIN
+  COMPANY
+}
+
+// talent
+model Talent {
+  id             String        @id @default(uuid())
+  gender         Gender
+  linkedIn       String?
+  gitPortWebsite String?
+  country        String?
+  profession     Profession?
+  university     String?
+  year           Year
+  mode           Mode
+  resume         String?
+  vetted         Boolean       @default(false)
+  skills         SKill[]
+  phone          String?
+  availability   Boolean?
+  workHistory    WorkHistory[]
+  userId         String?       @unique
+  user           User?         @relation(fields: [userId], references: [id])
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+  Education      Education[]
+  Project        Project[]
+  Certificate    Certificate[]
+  Application    Application[]
+}
+
+enum Gender {
+  MALE
+  FEMALE
+}
+
+enum Profession {
+  STUDENT
+  GRADUATE
+}
+
+enum Year {
+  FIRST
+  SECOND
+  THIRD
+  FOURTH
+}
+
+enum Mode {
+  CONTRACT
+  INTERNSHIP
+  ENTRY_LEVEL
+}
+
+// company
+model Company {
+  id          String   @id @default(uuid())
+  logo        String?
+  type        String?
+  market      String?
+  country     String?
+  website     String
+  overview    String
+  address     String
+  linkedIn    String?
+  twitter     String?
+  foundedDate String
+  companySize String
+  userId      String?  @unique
+  user        User?    @relation(fields: [userId], references: [id])
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  Job         Job[]
+}
+
+//model skill
+model SKill {
+  id         String       @id @default(uuid())
+  skill      String
+  verified   Boolean
+  talentId   String?
+  talent     Talent?      @relation(fields: [talentId], references: [id])
+  job        Job?         @relation(fields: [jobId], references: [id])
+  jobId      String?
+  resource   Resource[]
+  assessment Assessment[]
+  createdAt  DateTime     @default(now())
+  updatedAt  DateTime     @updatedAt
+}
+
+// work history
+model WorkHistory {
+  id          String   @id @default(uuid())
+  jobTitle    String
+  company     String
+  companyLink String
+  description String?
+  from        String?
+  toDate      Boolean?
+  to          String?
+  talentId    String?
+  talent      Talent?  @relation(fields: [talentId], references: [id])
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+// education
+model Education {
+  id         String   @id @default(uuid())
+  school     String
+  schoolLink String?
+  degree     Degree
+  course     String
+  from       String?
+  toDate     Boolean?
+  to         String?
+  talentId   String?
+  talent     Talent?  @relation(fields: [talentId], references: [id])
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
+
+enum Degree {
+  HIGH_SCHOOL_DIPLOMA
+  BACHELOR
+  MASTERS
+  DOCTOR
+  MBA
+}
+
+// project
+model Project {
+  id           String   @id @default(uuid())
+  projectTitle String
+  projectLink  String
+  description  String
+  year         String
+  talentId     String?
+  talent       Talent?  @relation(fields: [talentId], references: [id])
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+// certificate
+model Certificate {
+  id        String   @id @default(uuid())
+  title     String
+  company   String
+  month     String
+  talentId  String
+  talent    Talent?  @relation(fields: [talentId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// assessment
+model Assessment {
+  id           String   @id @default(uuid())
+  question     String
+  alternatives String[]
+  answer       String
+  skillId      String
+  skill        SKill    @relation(fields: [skillId], references: [id])
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+// resource
+model Resource {
+  id          String       @id @default(uuid())
+  link        String
+  title       String
+  description String
+  type        ResourceType
+  skillId     String
+  skill       SKill        @relation(fields: [skillId], references: [id])
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+}
+
+enum ResourceType {
+  VIDEO
+  ARTICLE
+}
+
+// event
+model Event {
+  id          String   @id @default(uuid())
+  title       String
+  image       String
+  link        String
+  date        DateTime
+  description String
+  category    Category
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+enum Category {
+  LEADERSHIP
+  MENTORSHIP
+  JOB
+  CAREER_ADVICE
+  SKILLS
+}
+
+// job 
+model Job {
+  id               String        @id @default(uuid())
+  jobTitle         String
+  status           Status
+  jobCategory      JobCategory?
+  workLocation     Location
+  skills           SKill[]
+  requirements     String
+  responsibilities String
+  education        Degree
+  minPay           Decimal       @db.Decimal()
+  maxPay           Decimal       @db.Decimal()
+  jobType          JobType
+  about            String
+  salary           Salary
+  experience       Experience
+  companyId        String
+  company          Company       @relation(fields: [companyId], references: [id])
+  application      Application[]
+  createdAt        DateTime      @default(now())
+  updatedAt        DateTime      @updatedAt
+}
+
+enum Salary {
+  MONTHLY
+  WEEKLY
+  YEARLY
+}
+
+enum Status {
+  ACIVE
+  CLOSED
+}
+
+enum JobType {
+  FULL
+  PART
+  CONTRACT
+  INTERNSHIP
+}
+
+enum JobCategory {
+  DEV
+  DESIGN
+  WRITING
+  MARKETING
+  OTHER
+}
+
+enum Experience {
+  NO_EXPERIENCE
+  ONE
+  TWO
+  THREE
+  FOUR
+  FIVE_OR_MORE
+}
+
+enum Location {
+  ONSITE
+  REMOTE
+  ONSITE_REMOTE
+}
+
+// application
+model Application {
+  id        String            @id @default(uuid())
+  talentId  String
+  talent    Talent            @relation(fields: [talentId], references: [id])
+  jobId     String
+  job       Job               @relation(fields: [jobId], references: [id])
+  status    ApplicationStatus
+  createdAt DateTime          @default(now())
+  updatedAt DateTime          @updatedAt
+}
+
+enum ApplicationStatus {
+  PENDING
+  ACCEPTED
+  REJECTED
+}
+
+// message 
+model Message {
+  id          String   @id @default(uuid())
+  title       String
+  description String
+  read        Boolean  @default(false)
+  senderId    String
+  sender      User     @relation("MessagesSent", fields: [senderId], references: [id])
+  receiverId  String
+  receiver    User     @relation("MessagesReceived", fields: [receiverId], references: [id])
+  userId      String?
+  user        User?    @relation(fields: [userId], references: [id])
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}

@@ -16,7 +16,11 @@ export const env = createEnv({
         EMAIL_SERVICE_ID: z.string().min(1),
         EMAIL_TEMPLATE_ID: z.string().min(1),
         EMAIL_USER_ID: z.string().min(1),
-        TAWK_TO_ID: z.string().min(1)
+        TAWK_TO_ID: z.string().min(1),
+        MAIL_HOST: z.string().min(1),
+        MAIL_PORT: z.string().min(1),
+        MAIL_USER: z.string().min(1),
+        MAIL_PASSWORD: z.string().min(1)
     },
     client: {
 
@@ -35,6 +39,10 @@ export const env = createEnv({
         EMAIL_SERVICE_ID: process.env.EMAIL_SERVICE_ID,
         EMAIL_TEMPLATE_ID: process.env.EMAIL_TEMPLATE_ID,
         EMAIL_USER_ID: process.env.EMAIL_USER_ID,
-        TAWK_TO_ID: process.env.TAWK_TO_ID
+        TAWK_TO_ID: process.env.TAWK_TO_ID,
+        MAIL_HOST: process.env.MAIL_HOST,
+        MAIL_PORT: process.env.MAIL_PORT,
+        MAIL_USER: process.env.MAIL_USER,
+        MAIL_PASSWORD: process.env.MAIL_PASSWORD
     }
 })

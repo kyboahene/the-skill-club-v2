@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createServerClient, type CookieOptions } from '@supabase/ssr'
+import { env } from '@/env'
 
 export async function updateSession(request: NextRequest) {
     let response = NextResponse.next({
@@ -9,8 +10,8 @@ export async function updateSession(request: NextRequest) {
     })
 
     const supabase = createServerClient(
-        process.env.NEXT_PUBLIC_SUPABASE_URL!,
-        process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+        env.SUPABASE_URL!,
+        env.SUPABASE_ANON_KEY!,
         {
             cookies: {
                 get(name: string) {
@@ -54,7 +55,7 @@ export async function updateSession(request: NextRequest) {
         }
     )
 
-    await supabase.auth.getUser()
+    const { data: user } = await supabase.auth.getUser()
 
-    return response
+    return { response, user }
 }

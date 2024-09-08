@@ -1,10 +1,12 @@
+"use client";
+
 /* eslint-disable @next/next/no-img-element */
 import Image from "next/image";
 import Button from "@/modules/shared/components/button";
 import React, { useState } from "react";
 
-const Index = () => {
-  const [selected, setSelected] = useState<string>("Hire Talents");
+const ForCompanies = () => {
+  const [selected, setSelected] = useState("Hire Talents");
   const opportunities = ["Hire Talents", "Post a Job"];
 
   return (
@@ -152,4 +154,4 @@ const Index = () => {
   );
 };
 
-export default Index;
+export default ForCompanies;

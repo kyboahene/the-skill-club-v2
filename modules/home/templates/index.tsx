@@ -1,9 +1,10 @@
 import React from "react";
+import Hero from "../components/hero";
 import Modes from "../components/modes";
 import WhyJoin from "../components/why-join";
 import HowToHire from "../components/how-to-hire";
 import Footer from "@/modules/layout/templates/footer";
-import Hero from "../components/hero";
+import ForCompanies from "../components/for-companies";
 
 const HomePageTemplate = () => {
   return (
@@ -11,8 +12,8 @@ const HomePageTemplate = () => {
       <Hero />
       <Modes />
       <WhyJoin />
-      {/* <ForCompany />
-      <ShowTalents /> */}
+      <ForCompanies />
+      {/* <ShowTalents />  */}
       <HowToHire />
       <Footer />
     </>

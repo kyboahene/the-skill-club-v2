@@ -4,7 +4,8 @@ import "../../styles/globals.css";
 import { env } from "@/env";
 
 // modules
-import DashboardLayoutTemplate from "@/modules/talent-dashboard/templates/dashboard-layout-template";
+import TalentDashboardTopNav from "@/modules/talent-dashboard/components/topnav";
+import TalentDashboardSidebar from "@/modules/talent-dashboard/components/sidebar";
 
 export const metadata: Metadata = {
   title: {
@@ -20,17 +21,27 @@ export const metadata: Metadata = {
   metadataBase: new URL(env.BASE_URL),
 };
 
-export default function RootLayout({
+export default function DashboardLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <head>
         <link rel="icon" href="/theskillclub.svg" />
       </head>
-      <DashboardLayoutTemplate>{children}</DashboardLayoutTemplate>
+      <body>
+        <main className="flex h-screen overflow-hidden border border-red-700">
+          <TalentDashboardSidebar />
+          <div className="flex-1 flex flex-col overflow-hidden">
+            <TalentDashboardTopNav />
+            <section className="flex-1 overflow-y-auto bg-[#f0f5f3]">
+              <div className="px-6 py-6 pt-20 sm:px-14">{children}</div>
+            </section>
+          </div>
+        </main>
+      </body>
     </html>
   );
 }

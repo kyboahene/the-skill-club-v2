@@ -1,9 +1,8 @@
 import React from "react";
 import Link from "next/link";
-import Lottie from "react-lottie";
 
 // lottie
-import empty from "@/lottie/empty-box.json";
+import empty from "@/lottie/empty.json";
 
 // shared
 import {
@@ -16,11 +15,13 @@ import {
 } from "@/modules/shared/components/table";
 
 // lib
-import { JobDetail } from "@/lib/types";
+import { JobDetail } from "@/lib/types/misc";
 
 // utils
 import { Capitalize } from "@/lib/utils/capitalize";
-import { reactLottieConfig } from "@/lib/utils/react-lottie-config";
+
+// modules
+import LottieAnimation from "@/modules/shared/components/lottie-animation";
 
 type RecommendedJobsProps = {
   recommendedJobs?: JobDetail[];
@@ -35,9 +36,7 @@ const RecommendedJobs = ({ recommendedJobs }: RecommendedJobsProps) => {
           <p className="text-gray-500">Jobs where you&apos;re top applicant.</p>
         </div>
         <div className="text-right">
-          <Link href="/talent-dashboard/settings">
-            <a>Change job preferences</a>
-          </Link>
+          <Link href="/talent-dashboard/settings">Change job preferences</Link>
         </div>
       </div>
       <div className="max-sm:max-w-[300px] overflow-x-auto">
@@ -75,19 +74,17 @@ const RecommendedJobs = ({ recommendedJobs }: RecommendedJobsProps) => {
                       {Capitalize(job.status)}
                     </TableCell>
                     <TableCell className="overflow-hidden truncate">
-                      {job.timestamp.toDate().toDateString()}
+                      {/* {job.timestamp.toDate().toDateString()} */}
                     </TableCell>
                   </TableRow>
                 );
               })
             ) : (
               <TableRow>
-                <TableCell colSpan={5}>
-                  <Lottie
-                    width={300}
-                    height={300}
-                    options={reactLottieConfig(empty)}
-                  />
+                <TableCell align="center" colSpan={5}>
+                  <div className="h-[20em] w-[20em]">
+                    <LottieAnimation animationData={empty} />
+                  </div>
                   <p className="text-center">
                     You have no recommended job(s) yet.
                   </p>

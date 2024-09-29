@@ -1,7 +1,7 @@
 import React from "react";
 
 // UI
-import Button from "@/modules/shared/components/button";
+import Button from "@/modules/shared/components/custom-button";
 
 const HowToHire = () => {
   return (

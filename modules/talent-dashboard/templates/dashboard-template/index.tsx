@@ -15,7 +15,7 @@ import RecommendedJobs from "../../components/recommended-jobs";
 import waving from "@/lottie/waving.json";
 
 // utils
-import { ApplicationWithDetails, JobDetail } from "@/lib/types";
+import { ApplicationWithDetails, JobDetail } from "@/lib/types/misc";
 import { reactLottieConfig } from "@/lib/utils/react-lottie-config";
 
 // shared
@@ -100,8 +100,8 @@ const DashboardTemplate = () => {
             </div>
           </div>
           <div className="flex flex-col lg:flex-row gap-4">
-            {/* <RecommendedJobs recommendedJobs={recommendedJobs} /> */}
-            {/* <AppliedJobs appliedJobs={appliedJobs} /> */}
+            <RecommendedJobs recommendedJobs={recommendedJobs} />
+            <AppliedJobs appliedJobs={appliedJobs} />
           </div>
         </div>
       </div>

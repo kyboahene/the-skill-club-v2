@@ -1,7 +1,7 @@
 import Link from "next/link";
 import React from "react";
 import Image from "next/image";
-import Button from "@/modules/shared/components/button";
+import Button from "@/modules/shared/components/custom-button";
 
 const WhyJoin = () => {
   return (

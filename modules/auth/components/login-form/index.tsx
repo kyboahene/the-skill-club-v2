@@ -5,6 +5,7 @@ import Link from "next/link";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Eye, EyeOff } from "lucide-react";
+import { useServerAction } from "zsa-react";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 // action
@@ -24,9 +25,21 @@ import {
   FormControl,
 } from "@/modules/shared/components/form";
 import { Input } from "@/modules/shared/components/input";
+import { useRouter } from "next/navigation";
 
 const LoginForm = () => {
+  const router = useRouter();
   const [showPassword, setShowPassword] = useState(true);
+
+  const { isPending, execute } = useServerAction(signInWithPassword, {
+    onError({ err }) {
+      form.setError("email", { message: err.message });
+      form.setError("password", { message: err.message });
+    },
+    onSuccess({ data }) {
+      router.push("/dashboard");
+    },
+  });
 
   const form = useForm<z.infer<typeof signInWithPasswordInputSchema>>({
     resolver: zodResolver(signInWithPasswordInputSchema),
@@ -42,17 +55,12 @@ const LoginForm = () => {
       password: values.password,
     };
 
-    const [_, error] = await signInWithPassword(data);
-    console.log({ data });
-    if (error) {
-      form.setError("email", { message: error.message });
-      form.setError("password", { message: error.message });
-    }
+    execute(data);
   }
 
   return (
     <Form {...form}>
-      <div className="login-form lg:w-96">
+      <div className="lg:w-96">
         <SignInWithProvider text="Sign In with Google" />
         <div className="flex relative items-center justify-center my-8 before:w-full before:h-[1px] before:block before:absolute before:bg-gray-400 before:content-['']">
           <h1 className="text-center z-10 bg-white px-3">Or</h1>
@@ -113,14 +121,10 @@ const LoginForm = () => {
           <div className="">
             <button
               type="submit"
-              disabled={form.formState.isLoading}
+              disabled={isPending}
               className="rounded-[35px] bg-gradient-to-r from-yellow to-green px-3 py-4 text-center w-full text-[14px] hover:cursor-pointer"
             >
-              {form.formState.isLoading ? (
-                <span className="spinner"></span>
-              ) : (
-                "Login"
-              )}
+              {isPending ? <span className="spinner"></span> : "Login"}
             </button>
           </div>
         </form>

@@ -5,7 +5,7 @@ import Image from "next/image";
 import React, { useEffect, useState } from "react";
 
 // types
-import { CustomUser } from "../../../../lib/types";
+import { CustomUser } from "../../../../lib/types/misc";
 
 // utils
 import { Capitalize } from "../../../../utils/capitalize";

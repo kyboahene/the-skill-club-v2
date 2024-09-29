@@ -38,7 +38,7 @@ const LoginPageTemplate = () => {
           <p>
             Don&apos;t have an account?{" "}
             <Link
-              href="/auth/sign-up"
+              href="/company/auth/sign-up"
               className="mx-1 hover:underline font-bold"
             >
               SignUp

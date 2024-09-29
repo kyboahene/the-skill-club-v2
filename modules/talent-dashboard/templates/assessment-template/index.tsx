@@ -2,26 +2,19 @@
 
 import Link from "next/link";
 import Lottie from "react-lottie";
+import React, { useState } from "react";
 import { ChevronRight } from "lucide-react";
-import React, { useMemo, useState } from "react";
-
-//store
-import { ISkill } from "@/lib/types";
 
 // lottie
 import empty from "@/lottie/empty-box.json";
-import useDebounce from "@/lib/hooks/use-debounce";
-import { reactLottieConfig } from "@/lib/utils/react-lottie-config";
-import Button from "@/modules/shared/components/button";
-import { cn } from "@/lib/utils";
+
+// shared
+import Button from "@/modules/shared/components/custom-button";
 
 // utils
-
-// hooks
-
-//components
-
-//icons
+import { cn } from "@/lib/utils";
+import useDebounce from "@/lib/hooks/use-debounce";
+import { reactLottieConfig } from "@/lib/utils/react-lottie-config";
 
 const TalentAssessmentTemplate = () => {
   const [query, setQuery] = useState("");

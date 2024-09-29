@@ -1,4 +1,4 @@
-import Button from "@/modules/shared/components/button";
+import Button from "@/modules/shared/components/custom-button";
 import React from "react";
 
 const FooterCTA = () => {

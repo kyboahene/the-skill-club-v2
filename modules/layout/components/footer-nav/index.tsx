@@ -36,7 +36,7 @@ const FooterNav = () => {
           </p>
           <div className="flex flex-col gap-5 md:text-[14px] md:gap-6 text-left">
             <Link href="/events">Events</Link>
-            <Link href="/for-companies">For Companies</Link>
+            <Link href="/company/auth/login">For Companies</Link>
             <Link href="/contact-us">Contact Us</Link>
             <Link href="/community">Join Community</Link>
           </div>

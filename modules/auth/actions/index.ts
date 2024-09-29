@@ -11,7 +11,7 @@ import {
     signInWithPasswordInputSchema,
     signInWithProviderInputSchema,
 } from "@/lib/validations/auth";
-import { AuthError } from "@/lib/utils/auth-error";
+import { AuthError } from "@/lib/utils/errors";
 import { baseProcedure } from "@/lib/utils/zsa-procedure";
 
 export const signInWithPassword = baseProcedure.createServerAction()
@@ -24,9 +24,7 @@ export const signInWithPassword = baseProcedure.createServerAction()
                 input.password
             )
 
-            console.log('action running...')
-
-            redirect('/dashboard')
+            redirect("/dashboard")
         } catch (err) {
             if (err instanceof AuthError) {
                 throw new ZSAError('ERROR', err)

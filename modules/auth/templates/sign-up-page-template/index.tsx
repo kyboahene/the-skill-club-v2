@@ -35,7 +35,7 @@ const SignUpPageTemplate = () => {
         <div className="flex justify-center my-5">
           <p>
             Already have an account ?{" "}
-            <Link href="/auth/login" className="mx-1 hover:underline font-bold">
+            <Link href="/company/auth/login" className="mx-1 hover:underline font-bold">
               Login
             </Link>
           </p>

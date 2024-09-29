@@ -5,10 +5,6 @@ import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useTypewriter, Typewriter } from "react-simple-typewriter";
 
-import Navbar from "@/modules/layout/templates/main-nav";
-
-// layout
-
 const Hero = () => {
   const router = useRouter();
   const [email, setEmail] = useState("");
@@ -28,7 +24,6 @@ const Hero = () => {
 
   return (
     <div className="relative bg-black bg-cover bg-center h-screen">
-      <Navbar />
       <div className="container mx-auto md:w-5/6">
         <div className="z-50 relative text-white h-screen flex justify-center items-center">
           <div className="w-5/6 relative mt-8 text-center">

@@ -2,7 +2,7 @@
 
 /* eslint-disable @next/next/no-img-element */
 import Image from "next/image";
-import Button from "@/modules/shared/components/button";
+import Button from "@/modules/shared/components/custom-button";
 import React, { useState } from "react";
 
 const ForCompanies = () => {

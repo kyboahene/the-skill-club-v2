@@ -1,17 +1,12 @@
-/* eslint-disable @next/next/no-img-element */
 import React from "react";
+import Image from "next/image";
 
 //shared
-import Button from "../shared/components/button";
-
-// layout
-import Footer from "../layout/templates/footer";
-import Navbar from "../layout/templates/main-nav";
+import Button from "../shared/components/custom-button";
 
 const CommunityPageTemplate = () => {
   return (
-    <main className="flex flex-col gap-10">
-      <Navbar />
+    <section className="flex flex-col gap-10">
       <div className="md:w-5/6 mx-auto pt-[7em] pb-[6em]">
         <div className="text-center">
           <h1 className="header-font text-center text-[30px] md:text-[40px]">
@@ -23,11 +18,15 @@ const CommunityPageTemplate = () => {
         </div>
         <div className="flex flex-col lg:flex-row justify-center items-center">
           <div className="lg:flex-1 flex justify-center">
-            <img
-              src="/images/community.svg"
-              alt="community"
-              className="h-[20em] md:h-[25em]"
-            />
+            <div className="h-[19.5em] w-[18em] md:h-[21em] md:w-[22em] z-10 relative">
+              <Image
+                layout="fill"
+                alt="community"
+                objectFit="cover"
+                objectPosition="center"
+                src="/images/community.svg"
+              />
+            </div>
           </div>
           <ul className="lg:flex-1 flex flex-col gap-6 text-sm list-disc px-8">
             <li>Get exclusive access to webinars with industry experts</li>
@@ -51,8 +50,7 @@ const CommunityPageTemplate = () => {
           <Button link="https://t.me/+cNKWdbKKkEQ2MGY0" text="Join Now" />
         </div>
       </div>
-      <Footer />
-    </main>
+    </section>
   );
 };
 

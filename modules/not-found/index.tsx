@@ -10,7 +10,7 @@ import empty from "@/lottie/not-found.json";
 
 // layout
 import Navbar from "../layout/templates/main-nav";
-import Button from "../shared/components/button";
+import Button from "../shared/components/custom-button";
 import { defaultOptions } from "@/lib/utils";
 
 const NotFoundPageTemplate = () => {

@@ -1,13 +1,14 @@
 import React from "react";
 import Link from "next/link";
-import Lottie from "react-lottie";
 import { ChevronRight } from "lucide-react";
 
 // lottie
-import empty from "@/lottie/empty-box.json";
+import empty from "@/lottie/empty.json";
 
-import { ApplicationWithDetails } from "@/lib/types";
-import { reactLottieConfig } from "@/lib/utils/react-lottie-config";
+import { ApplicationWithDetails } from "@/lib/types/misc";
+
+// modules
+import LottieAnimation from "@/modules/shared/components/lottie-animation";
 
 type AppliedJobsProps = {
   appliedJobs?: ApplicationWithDetails[];
@@ -49,11 +50,9 @@ const AppliedJobs = ({ appliedJobs }: AppliedJobsProps) => {
       ) : (
         <div className="flex flex-row justify-center items-center w-full">
           <div>
-            <Lottie
-              options={reactLottieConfig(empty)}
-              height={300}
-              width={300}
-            />
+            <div className="h-[20em] w-[20em]">
+              <LottieAnimation animationData={empty} />
+            </div>
             <div className="text-center">
               <p>You have not applied any job yet.</p>
               <div className="flex justify-center mt-2">

@@ -5,26 +5,28 @@ import {
   TabsTrigger,
 } from "@/modules/shared/components/tabs";
 import React from "react";
+import ProfileOverview from "../../components/profile-overview";
+import ProfileEdit from "../../components/profile-edit";
+import ProfileResumeTemplate from "../profile-resume-template";
 
 const TalentProfileTemplate = () => {
   return (
     <section className="pt-20">
-      <Tabs defaultValue="account" className="w-[400px]">
-        <TabsList className="grid w-full grid-cols-2 bg-black text-white rounded-[35px]">
-          <TabsTrigger
-            value="account"
-            className="hover:bg-white rounded-md overflow-hidden"
-          >
-            Overview
-          </TabsTrigger>
-          <TabsTrigger value="password">Password</TabsTrigger>
+      <Tabs defaultValue="overview">
+        <TabsList className="flex justify-start border-b">
+          <TabsTrigger value="overview">Overview</TabsTrigger>
+          <TabsTrigger value="edit">Edit Profile</TabsTrigger>
           <TabsTrigger value="resume">Resume</TabsTrigger>
         </TabsList>
-        <TabsContent value="account">
-          Make changes to your account here.
+        <TabsContent value="overview">
+          <ProfileOverview />
         </TabsContent>
-        <TabsContent value="password">Change your password here.</TabsContent>
-        <TabsContent value="resume">Change your resume here.</TabsContent>
+        <TabsContent value="edit">
+          <ProfileEdit />
+        </TabsContent>
+        <TabsContent value="resume">
+          <ProfileResumeTemplate />
+        </TabsContent>
       </Tabs>
     </section>
   );

@@ -47,20 +47,19 @@ model Talent {
   university     String?
   year           Year
   mode           Mode
-  resume         String?
   vetted         Boolean       @default(false)
-  skills         SKill[]
   phone          String?
   availability   Boolean?
-  workHistory    WorkHistory[]
+  projects       Project[]
+  education      Education[]
+  userSkill      TalentSkill[]
+  workHistories  WorkHistory[]
+  certificates   Certificate[]
+  applications   Application[]
   userId         String?       @unique
   user           User?         @relation(fields: [userId], references: [id])
   createdAt      DateTime      @default(now())
   updatedAt      DateTime      @updatedAt
-  Education      Education[]
-  Project        Project[]
-  Certificate    Certificate[]
-  Application    Application[]
 }
 
 enum Gender {
@@ -101,25 +100,36 @@ model Company {
   foundedDate String
   companySize String
   userId      String?  @unique
+  job         Job[]
   user        User?    @relation(fields: [userId], references: [id])
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
-  Job         Job[]
+}
+
+// model user skill
+model TalentSkill {
+  id        String   @id @default(uuid())
+  skillId   String
+  skill     Skill?   @relation(fields: [skillId], references: [id])
+  verified  Boolean  @default(false)
+  talentId  String?
+  talent    Talent?  @relation(fields: [talentId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 //model skill
-model SKill {
-  id         String       @id @default(uuid())
-  skill      String
-  verified   Boolean
-  talentId   String?
-  talent     Talent?      @relation(fields: [talentId], references: [id])
-  job        Job?         @relation(fields: [jobId], references: [id])
+model Skill {
+  id         String        @id @default(uuid())
+  name       String        @unique
+  icon       String
+  job        Job?          @relation(fields: [jobId], references: [id])
   jobId      String?
   resource   Resource[]
+  userSkill  TalentSkill[]
   assessment Assessment[]
-  createdAt  DateTime     @default(now())
-  updatedAt  DateTime     @updatedAt
+  createdAt  DateTime      @default(now())
+  updatedAt  DateTime      @updatedAt
 }
 
 // work history
@@ -194,7 +204,7 @@ model Assessment {
   alternatives String[]
   answer       String
   skillId      String
-  skill        SKill    @relation(fields: [skillId], references: [id])
+  skill        Skill    @relation(fields: [skillId], references: [id])
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
 }
@@ -207,7 +217,7 @@ model Resource {
   description String
   type        ResourceType
   skillId     String
-  skill       SKill        @relation(fields: [skillId], references: [id])
+  skill       Skill        @relation(fields: [skillId], references: [id])
   createdAt   DateTime     @default(now())
   updatedAt   DateTime     @updatedAt
 }
@@ -219,18 +229,18 @@ enum ResourceType {
 
 // event
 model Event {
-  id          String   @id @default(uuid())
+  id          String        @id @default(uuid())
   title       String
   image       String
   link        String
   date        DateTime
   description String
-  category    Category
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  category    EventCategory
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
 }
 
-enum Category {
+enum EventCategory {
   LEADERSHIP
   MENTORSHIP
   JOB
@@ -245,7 +255,7 @@ model Job {
   status           Status
   jobCategory      JobCategory?
   workLocation     Location
-  skills           SKill[]
+  skills           Skill[]
   requirements     String
   responsibilities String
   education        Degree
